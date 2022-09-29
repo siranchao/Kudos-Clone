@@ -1,0 +1,75 @@
+/* By default view */
+.menuIcon {
+    display: none;
+    cursor: pointer;
+}
+
+/* Responsive Nav-bar */
+@media only screen and (max-width: 1167px) {
+    .menuIcon {
+        display: block;
+        color: #fff;
+        margin-right: .6rem;
+    }
+
+    .menuIcon svg {
+        width: 1.6rem;
+        height: 1.6rem;
+    }
+}
+
+
+/* Dropdown menu navbar */
+.dropdownNav {
+    background-color: #F2F2F2;
+    position: absolute;
+    width: 100vw;
+    height: 60vh;
+    overflow: hidden;
+}
+
+.dropdownNavList {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+}
+
+.dropdownNavListItem{
+    height: 4rem;
+    padding: 1rem 0;
+    line-height: 4rem;
+    width: 100%;
+    text-align: center;
+    border-bottom: #CCCCCC solid 1px;
+    cursor: pointer;
+}
+
+.dropdownNavItem {
+    text-decoration: none;
+}
+
+.dropdownNavText {
+    color: #1a1a1a;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.dropdownNavListItem:hover {
+    background-color: #CCCCCC;
+    transform: scale(1.1);
+}
+
+.dropdownNavListItem:active {
+    background-color: #CCCCCC;
+}
+
+.dropdownNavItem:active {
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+.dropdownNavItem:hover {
+    text-decoration: underline;
+}
