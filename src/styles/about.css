@@ -1,0 +1,44 @@
+.about{
+    display: flex;
+}
+
+.info{
+    flex: 0.5;
+    margin-left: 2%;
+}
+
+.logo{
+    flex: 0.5;
+    position: relative;
+    margin-top: 70px;
+    margin-left: 120px;
+    margin-right: 90px;
+    width: 700px;
+    height: 600px;
+}
+
+.feedback{
+    position: absolute;
+}
+
+@media only screen and (max-width: 768px) {
+        .about{
+            display: block;
+        }
+
+        .info{
+            display: inline-block;
+        }
+
+        .logo{
+            margin-top: 50px;
+            margin-left: 35px;
+            margin-right: 80px;
+            display: block;
+            margin-bottom: 180px;
+        }
+        .feedback{
+            margin-top: 0%;
+        }
+      }
+    

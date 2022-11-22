@@ -4,6 +4,10 @@
  * See: https://www.gatsbyjs.com/docs/ssr-apis/
  */
 
+const wrapWithProvider = require("./src/wrap-with-provider");
+
 exports.onRenderBody = ({ setHtmlAttributes }) => {
   setHtmlAttributes({ lang: `en` })
 }
+
+module.exports = wrapWithProvider;

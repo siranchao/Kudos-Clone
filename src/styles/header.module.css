@@ -9,24 +9,19 @@
     .menuIcon {
         display: block;
         color: #fff;
-        margin-right: .6rem;
+        margin-right: .8rem;
     }
 
     .menuIcon svg {
-        width: 1.6rem;
-        height: 1.6rem;
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        margin: auto;
     }
 }
 
 
 /* Dropdown menu navbar */
-.dropdownNav {
-    background-color: #F2F2F2;
-    position: absolute;
-    width: 100vw;
-    height: 60vh;
-    overflow: hidden;
-}
 
 .dropdownNavList {
     margin: 0;

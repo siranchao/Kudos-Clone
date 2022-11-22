@@ -1,4 +1,3 @@
-@import '../../ontario-design-system/styles/ds-theme.css';
 
 :root {
   --border-radius: 4px;
@@ -23,7 +22,7 @@
   --space-4: 24px;
   --space-5: 32px;
   --space-6: 64px;
-  --size-content: 54rem;
-  --size-gutter: var(--space-5);
-  --size-gap: var(--space-6);
+  --size-content: 72rem;
+  --size-gutter: var(--space-4);
+  --size-gap: var(--space-5);
 }
