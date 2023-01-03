@@ -9,15 +9,20 @@ export default function Message({ addMessage }) {
         setMessage(event.target.value);
     };
 
-    const sendMessage = () =>{
+    const sendMessage = () => {
         addMessage(message)
+        window.scrollTo({
+            top: 500,
+            left: 0,
+            behavior: 'smooth'
+        });
     }
 
     return (
         <div style={{
             textAlign: `center`,
             margin: `2rem auto`,
-            maxWidth: 400,
+            maxWidth: 600,
             minWidth: 300
         }}>
 

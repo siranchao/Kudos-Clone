@@ -1,54 +1,98 @@
 import * as React from "react"
-import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 import { Link } from "gatsby"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import Banner from "../components/Banner"
 import * as styles from "../styles/index.module.css"
 
-const IndexPage = () => (
-  <Layout>
+//import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
+import { useIsAuthenticated } from "@azure/msal-react";
+import { useMsal } from "@azure/msal-react";
 
-    {/* <AuthenticatedTemplate>
-        <h1>Authenticated</h1>
-    </AuthenticatedTemplate>
+const IndexPage = () => {
 
-    <UnauthenticatedTemplate>
-        <h1>Unauthenticated</h1>
-    </UnauthenticatedTemplate> */}
+  //User Auth
+  const isAutheticated = useIsAuthenticated();
+  const { instance, accounts } = useMsal();
+  const name = accounts[0] && accounts[0].name;
 
-    <Seo title="Home" />
-    <div>
-      <Banner />
-    </div>
-    <div style={{
-      margin: `0 auto`,
-      maxWidth: `var(--size-content)`,
-      padding: `var(--size-gutter)`,
-    }}>
-      <div className="ontario-callout">
-        <h2 className="ontario-callout__title ontario-h5">Welcome to Kudos</h2>
-        <p className={styles.paragraph}><strong>5</strong> Kudos created in the past 7 days, <strong>102</strong> Kudos created in total, <strong>55</strong> people has joined Kudos App!</p>
-        <p className={styles.paragraph}><Link to="/login">Sign up for email reminders</Link> and we’ll notify you 60 and 30 days before your licence expires.</p>
+  //LOGIN LOGOUT
+  const handleLogin = () => {
+    instance.loginRedirect().catch(e => {
+      console.log(e);
+    });
+  }
+  const handleLogout = () => {
+    instance.logoutRedirect();
+  }
+
+  const [kpi, setKpi] = React.useState({})
+
+  React.useEffect(() => {
+    async function fetchData() {
+      const res = await fetch('https://rpdukudos-api.azurewebsites.net/api/kudos/kpi');
+      const data = await res.json();
+      setKpi(data);
+    }
+
+    fetchData();
+  }, [])
+
+  return (
+    <Layout>
+
+      {/* <AuthenticatedTemplate
+          <h1>Authenticated</h1>
+      </AuthenticatedTemplate>
+
+      <UnauthenticatedTemplate>
+          <h1>Unauthenticated</h1>
+      </UnauthenticatedTemplate> */}
+
+      <Seo title="Home" />
+      <div>
+        <Banner />
       </div>
+      <div style={{
+        margin: `0 auto`,
+        maxWidth: `var(--size-content)`,
+        padding: `var(--size-gutter)`,
+      }}>
+        <div className="ontario-callout">
+          {isAutheticated ?
+            <div>
+              <h2 className="ontario-callout__title ontario-h5">Welcome to Kudos, {name}</h2>
+              <p className={styles.paragraph}><strong>{kpi.recent}</strong> Kudos created in the past 30 days, <strong>{kpi.total}</strong> Kudos created in total. </p>
+              <p className={styles.paragraph}>You can <a className={styles.link} onClick={handleLogout}>click here</a> to Logout the app.</p>
+            </div>
+            :
+            <div>
+              <h2 className="ontario-callout__title ontario-h5">Welcome to Kudos!</h2>
+              <p className={styles.paragraph}><strong>{kpi.recent}</strong> Kudos created in the past 30 days, <strong>{kpi.total}</strong> Kudos created in total. </p>
+              <p className={styles.paragraph}>No need to sign up, just <a className={styles.link} onClick={handleLogin}>click Login</a> and you are ready to play!</p>
+            </div>
+          }
 
-      <div className={styles.entryBtnGroup}>
-        <div className={styles.btnBox}>
-          <Link to='/home' className="ontario-button ontario-button--primary">Gather & give Kudos</Link>
-          <p className={styles.infoText}>Here you can customize and create your own kudos from variety of templates we provide and send to anyone you wish!</p>
         </div>
 
-        <div className={styles.btnBox}>
-          <Link to='/myKudos' className="ontario-button ontario-button--secondary">Check my Kudos</Link>
-          <p className={styles.infoText}>Check any Kudos you received from other colleagues and you can collect any Kudos your like!</p>
+        <div className={styles.entryBtnGroup}>
+          <div className={styles.btnBox}>
+            <Link to='/giveKudos' className="ontario-button ontario-button--primary">Create New Kudo</Link>
+            <p className={styles.infoText}>Here you can customize and create your own special kudos from variety of templates </p>
+          </div>
+
+          <div className={styles.btnBox}>
+            <Link to='/myKudos' className="ontario-button ontario-button--secondary">Check My Kudos</Link>
+            <p className={styles.infoText}>Here you can check out those Kudos you just sent or received from other colleagues </p>
+          </div>
+
         </div>
 
       </div>
 
-    </div>
-
-  </Layout>
-)
+    </Layout>
+  )
+}
 
 /**
  * Head export to define metadata for the page

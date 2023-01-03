@@ -3,3 +3,39 @@
     gap: 2rem;
     grid-template-columns: repeat(3, 1fr);
 }
+.filter {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}
+
+/* Card module */
+.leftSection {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.rowSection {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 1024px) {
+    .kudosGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .filter {
+        justify-content: space-around
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    .kudosGrid {
+        grid-template-columns: repeat(1, 1fr);
+        justify-items: center;
+    }
+    .filter {
+        flex-direction: column;
+    }
+}

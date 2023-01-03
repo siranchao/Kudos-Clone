@@ -14,14 +14,17 @@
     "@giphy/react-components": "^6.2.0",
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.10.9",
-    "@mui/material": "^5.10.8",
+    "@mui/lab": "^5.0.0-alpha.114",
+    "@mui/material": "^5.11.2",
     "bootstrap": "^5.2.1",
     "gatsby": "^4.24.0",
     "gatsby-plugin-image": "^2.24.0",
     "gatsby-plugin-manifest": "^4.24.0",
     "gatsby-plugin-sharp": "^4.24.0",
     "gatsby-source-filesystem": "^4.24.0",
+    "gatsby-source-rest-api": "^0.2.3",
     "gatsby-transformer-sharp": "^4.24.0",
+    "mongoose": "^6.6.5",
     "prop-types": "^15.8.1",
     "react": "^17.0.0",
     "react-async-hook": "^4.0.0",
@@ -31,7 +34,7 @@
     "react-resize-observer": "^1.1.1",
     "react-router-dom": "^6.4.2",
     "styled-components": "^5.3.6",
-    "mongoose": "^6.6.5"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "prettier": "^2.7.1"
@@ -56,7 +59,5 @@
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
   },
-  
-  "proxy": "http://localhost:1337"
-  
+  "proxy": "http://localhost:5000"
 }

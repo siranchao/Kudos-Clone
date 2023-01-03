@@ -18,20 +18,22 @@ const ScrollButton = () => {
 
 	const scrollToTop = () => {
 		if (isBrowser) {
-		window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
-		});
-	}
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+		}
 	};
-	if (isBrowser) {  
-	window.addEventListener('scroll', toggleVisible);
+	if (isBrowser) {
+		window.addEventListener('scroll', toggleVisible);
 	}
 
 	return (
 		<Button>
 			<FaArrowCircleUp onClick={scrollToTop}
-				style={{ display: visible ? 'inline' : 'none' }} />
+				style={{
+					display: visible ? 'inline' : 'none'
+				}} />
 		</Button>
 	);
 }

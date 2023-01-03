@@ -1,34 +1,23 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+//import MoreVertIcon from '@mui/icons-material/MoreVert';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 import { Gif } from "@giphy/react-components"
 import { GiphyFetch } from "@giphy/js-fetch-api"
 import { useAsync } from "react-async-hook"
 
-const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));
+import * as styles from '../styles/home.module.css'
+
 
 //Giphy API key
 const gf = new GiphyFetch("pPpjPbnxhrccqEzHjNvYuQ7tW1JcCbsE")
@@ -42,68 +31,123 @@ const GifDisplay = ({ gifID }) => {
         }
     }, [])
 
-    return gif === true ? null : <Gif gif={gif} width={200} />
+    return gif === true ? null : <Gif style={{ display: "block", margin: "0 auto" }} gif={gif} width={200} />
 }
 
 
-export default function RecipeReviewCard({ kudos }) {
+export default function RecipeReviewCard({ id, kudos, kudoShare, user, type }) {
     const colorList = ["#CD0000", "#118847", "#FFD440", "#1080A6", "#551A8B", "#009ADB"]
-
     const randomColor = () => {
         return colorList[Math.floor(Math.random() * colorList.length)]
     }
 
-    const [expanded, setExpanded] = React.useState(false);
+    const [likedBtn, setLikedBtn] = React.useState(false);
+    const [thumbUpBtn, setThumbUpBtn] = React.useState(false);
+    const [thumbUpNum, setThumbUpNum] = React.useState(kudos.likes)
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-    console.log(kudos.createdAt.split('T')[0])
+    const handleThumbUp = async () => {
+        const num = thumbUpBtn ? thumbUpNum - 1 : thumbUpNum + 1
+        try {
+            await fetch(`https://rpdukudos-api.azurewebsites.net/api/kudos/thumbUp/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        number: num
+                    })
+                })
+
+        } catch (error) {
+            console.error(error)
+        }
+
+        thumbUpBtn ? setThumbUpNum(thumbUpNum - 1) : setThumbUpNum(thumbUpNum + 1)
+        setThumbUpBtn(!thumbUpBtn)
+    }
+
+    const handleLikedClick = async () => {
+        const clickType = likedBtn ? 'dislike' : 'like'
+
+        try {
+            await fetch(`https://rpdukudos-api.azurewebsites.net/api/kudos/like/${id}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: user,
+                        type: clickType
+                    })
+                })
+
+        } catch (error) {
+            console.error(error)
+        }
+        setLikedBtn(!likedBtn)
+    }
+
+    const handleShareClicked = () => {
+        kudoShare(id);
+    }
+
     return (
-        <Card sx={{ maxWidth: 345, boxShadow: 10 }} className="d-flex flex-column">
+
+        <Card sx={{ maxWidth: 345, boxShadow: 10 }} className="d-flex flex-column" >
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: randomColor() }} aria-label="recipe">
-                        {kudos.from[0]}
+                        {kudos.sender[0]}
                     </Avatar>
                 }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
-                title={kudos.from}
+                // action={
+                //     <IconButton aria-label="settings">
+                //         <MoreVertIcon />
+                //     </IconButton>
+                // }
+                title={kudos.sender}
                 subheader={kudos.createdAt.split('T')[0]}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    Send Kudos to <strong>@{kudos.to}</strong><strong>@Receiver2 </strong>
+                    Send Kudos to {kudos.receiver.map(ele => <strong>@{ele}  </strong>)}
                 </Typography>
             </CardContent>
             <CardContent>
                 <GifDisplay gifID={kudos.kudoGif} />
-                {/* <Gif gif={gifInfo} width={200} /> */}
             </CardContent>
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                {kudos.kudosMessage}
+                    <strong>"{kudos.message}"</strong>
                 </Typography>
             </CardContent>
-            <CardActions disableSpacing className='mt-auto' >
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
+            <CardActions disableSpacing className='mt-auto' sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <div className={styles.rowSection}>
+
+                    <div className={styles.leftSection}>
+                        <IconButton aria-label="like"
+                            color={likedBtn === true ? "primary" : "default"}
+                            onClick={handleLikedClick}>
+                            <FavoriteIcon />
+                        </IconButton>
+
+
+                        <IconButton aria-label="share"
+                            onClick={handleShareClicked}>
+                            <ShareIcon />
+                        </IconButton>
+                    </div>
+
+                    <IconButton aria-label="thumbUp"
+                        color={thumbUpBtn === true ? "primary" : "default"}
+                        onClick={handleThumbUp}>
+                        <ThumbUpIcon />
+                        {thumbUpNum > 0 && <span style={{ fontSize: '1.2rem', paddingLeft: '.5rem' }}>{thumbUpNum}</span>}
+                    </IconButton>
+
+                </div>
             </CardActions>
         </Card>
     );

@@ -1,47 +1,31 @@
-export const getKudos = () => {
- 
-    fetch("http://localhost:8000/api/kudos")
-        .then(result => result.json())
-        .then((json) => {});
 
+export const newKudo = async (receiver, gif, newMessage, sender) => {
 
-}
-export default function newKudo({receiver,gif,newMessage,send}) {
-    if (receiver.length == 0) {
-      setError(
-        <p className="errorMessage">
-          Please enter a person to receive the kudo!
-        </p>
-      )
-    } else {
-      const send = getUser().name;
-      const gifid = gif.id;
-      fetch(`http://localhost:8000/api/kudos`, {
+  if (receiver.length === 0) {
+    console.log("No Receiver")
+  }
+  else {
+    const data = {
+      sender: sender,
+      receiver: receiver,
+      kudoGif: gif.id,
+      message: newMessage,
+    }
+
+    try {
+      const res = await fetch(`https://rpdukudos-api.azurewebsites.net/api/kudos`, {
+        method: 'POST',
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json",
         },
-        method: "POST",
-        body: JSON.stringify({
-          to: receiver[0],
-          kudosType: parseInt(option),
-          kudosMessage: newMessage,
-          from: send ,
-          kudoGif: gifid,
-        }),
-      })
-        .then(function (response) {
-            console.log(response);
-          if (response.ok) {
-            console.log("Click was recorded")
-            return
-          }
-          throw new Error("Request failed.")
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+        body: JSON.stringify(data)
+      });
 
-      setError(<p color="green">Congratulations, your kudo has been sent!</p>)
+      const json = await res.json()
+      console.log(json);
+
+    } catch (error) {
+      console.error(error)
     }
+  }
 }

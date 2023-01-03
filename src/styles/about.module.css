@@ -1,0 +1,40 @@
+.about{
+    display: flex;
+    flex-direction: row;
+    padding-top: 2rem;
+}
+
+.info{
+    flex: 0.5;
+}
+
+.logo{
+    flex: 0.5;
+    display: flex;
+    justify-content: center;
+}
+
+.image {
+    display: block;
+    width: 15rem;
+    height: 15rem;
+    margin: auto;
+}
+
+/* .feedback{
+    position: absolute;
+} */
+
+@media only screen and (max-width: 768px) {
+        .about{
+            flex-direction: column;
+        }
+
+        .logo{
+            padding-bottom: 3rem;
+        }
+        /* .feedback{
+            margin-top: 0%;
+        } */
+      }
+    

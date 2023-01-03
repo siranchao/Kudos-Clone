@@ -1,36 +1,52 @@
 .banner {
     margin: 0 auto;
     width: 100vw;
-    height: 65vh;
+    height: 60vh;
     object-fit: cover;
 }
-
 .paragraph{
     line-height: 1.6;
     margin-bottom: 1rem;
 }
 
+.link{
+    cursor: pointer;
+    font-weight: 500;
+}
 .entryBtnGroup {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 }
-
 .entryBtnGroup a {
     width: 15rem;
     display: block;
     margin: 1rem auto;
 
 }
-
 .btnBox {
     width: 18rem;
     display: flex;
     flex-direction: column;
 }
-
 .infoText {
     font-size: 14px;
     color: #999999
+}
+
+@media only screen and (max-width: 1024px) {
+    .banner {
+        width: 100vw;
+        height: 50vh;
+        object-fit: cover;
+    }
+}
+
+@media only screen and (max-width: 680px) {
+    .banner {
+        width: 100vw;
+        height: 40vh;
+        object-fit: cover;
+    }
 }

@@ -8,6 +8,7 @@ export const SigninButton = () => {
         instance.loginRedirect().catch(e => {
             console.log(e);
         });
+
     }
 
     return (
