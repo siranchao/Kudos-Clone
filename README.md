@@ -15,6 +15,7 @@
 
 # rpdu.rd.kudos
 
+The original app url can be found at:
 [https://ashy-bay-0ac315a10.2.azurestaticapps.net/](https://ashy-bay-0ac315a10.2.azurestaticapps.net/)
 
 A simple mobile first (web) app to give kudos to any and everyone! Built on a MERN stack with Gatsby.
@@ -22,6 +23,7 @@ A simple mobile first (web) app to give kudos to any and everyone! Built on a ME
 [Gatsby](https://www.gatsbyjs.com/docs) is a React-based open-source framework for creating websites and apps. It's great whether you're building a portfolio site or blog, or a high-traffic e-commerce store or company homepage.
 
 ## Getting Started
+
 ### Local development
 
 [Install Node](https://nodejs.org/en/download/)
